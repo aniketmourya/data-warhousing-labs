@@ -1,0 +1,93 @@
+LAB 2 Solutions
+----------------
+
+1. Sales total w.r.t. Categories by store by day 
+
+select count(unit_sales) as "Total Sales", category, store_key, day_of_week
+FROM (Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by category, store_key, day_of_week
+order by store_key
+
+
+2. Sales Total by store by day 
+
+select count(unit_sales) as "Total Sales", name, day_of_week
+FROM (Store inner join [Sales_Fact] ON Store.Store_key = [Sales_Fact].Store_key) 
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by name, day_of_week
+order by name
+
+
+3. Sales Total of district by product by day 
+
+select count(unit_sales) as "Total Sales", sales_district, description , day_of_week
+FROM ((Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Store ON [Sales_Fact].Store_key = Store.Store_key)
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by sales_district, description, day_of_week
+
+
+4. Sales total for a month by product by store 
+
+select count(unit_sales) as "Total Sales", month, description , store_key
+FROM (Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by month, description , store_key
+order by month, store_key
+
+
+5. Sales total for a year by product by store
+
+select count(unit_sales) as "Total Sales", year, description , store_key
+FROM (Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by year, description , store_key
+order by year, description
+
+
+6. Sales Total by year by All stores by product 
+
+select count(unit_sales) as "Total Sales", year, store_key, description 
+FROM (Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by year, store_key, description
+order by year, store_key
+
+
+7. Sales Total of category by month by district 
+
+select count(unit_sales) as "Total Sales", category, month, sales_district
+FROM ((Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Store ON [Sales_Fact].Store_key = Store.Store_key)
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by category, month, sales_district
+order by category, month
+
+
+8. Sales Total of category by store by year 
+
+select count(unit_sales) as "Total Sales", category, name, year
+FROM ((Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Store ON [Sales_Fact].Store_key = Store.Store_key)
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by category, name, year
+order by category, name
+
+
+9. Sales Total of category by store by month 
+
+select count(unit_sales) as "Total Sales", category, name, month
+FROM ((Product inner join [Sales_Fact] ON Product.Product_key = [Sales_Fact].Product_key) 
+inner join Store ON [Sales_Fact].Store_key = Store.Store_key)
+inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by category, name, month
+order by category, name
+
+
+10. Calculate average selling price for a given period of time.
+
+select avg(dollar_sales * dollar_cost) as "Average selling price", month
+FROM [Sales_Fact] inner join Time ON [Sales_Fact].Time_key = Time.Time_key
+group by month
+order by month
